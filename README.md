@@ -1,4 +1,4 @@
-###Petter Fagerlund
+### Petter Fagerlund
 
 ## Redovisning
 Källkoden ska vara pushad till ett eget publikt repository på GitHub. Ert fullständiga namn, samt en *kort* reflektion över dina arkitekturella val, såsom:
