@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MovieLibrary.Services;
 
 namespace MovieLibrary
 {
@@ -27,6 +28,9 @@ namespace MovieLibrary
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<IMovieClient, MoviesClient>();
+            services.AddHttpClient<IMovieClient, MoviesClient>(configureClient =>
+                configureClient.BaseAddress = new Uri(Configuration.GetValue<string>("AmazonAws")));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "MovieLibrary", Version = "v1"});
@@ -43,7 +47,7 @@ namespace MovieLibrary
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MovieLibrary v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
