@@ -25,7 +25,7 @@ namespace MovieLibrary.Services
             try
             {
                 movies = new List<MovieModel>();
-                var task = _httpClient.GetAsync("https://ithstenta2020.s3.eu-north-1.amazonaws.com/topp100.json")
+                var request = _httpClient.GetAsync("https://ithstenta2020.s3.eu-north-1.amazonaws.com/topp100.json")
                     .ContinueWith((taskWithResponse) =>
                     {
                         var response = taskWithResponse.Result;
@@ -33,7 +33,7 @@ namespace MovieLibrary.Services
                         jsonString.Wait();
                         movies = JsonConvert.DeserializeObject<List<MovieModel>>(jsonString.Result);
                     });
-                task.Wait();
+                request.Wait();
 
                 if (!ascending)
                 {
@@ -53,7 +53,7 @@ namespace MovieLibrary.Services
             try
             {
                 var additionalMovies = new List<MovieModel>();
-                var task = _httpClient.GetAsync("https://ithstenta2020.s3.eu-north-1.amazonaws.com/detailedMovies.json")
+                var request = _httpClient.GetAsync("https://ithstenta2020.s3.eu-north-1.amazonaws.com/detailedMovies.json")
                     .ContinueWith((taskWithResponse) =>
                     {
                         var response = taskWithResponse.Result;
@@ -61,9 +61,9 @@ namespace MovieLibrary.Services
                         jsonString.Wait();
                         additionalMovies = JsonConvert.DeserializeObject<List<MovieModel>>(jsonString.Result);
                     });
-                task.Wait();
+                request.Wait();
 
-               await GetTop100MoviesAsync(ascending);
+                await GetTop100MoviesAsync(ascending);
 
                 var newMoviesToAdd = additionalMovies
                     .Where(x => this.movies
@@ -93,7 +93,7 @@ namespace MovieLibrary.Services
             try
             {
                 movies = new List<MovieModel>();
-                var task = _httpClient.GetAsync("https://ithstenta2020.s3.eu-north-1.amazonaws.com/topp100.json")
+                var request = _httpClient.GetAsync("https://ithstenta2020.s3.eu-north-1.amazonaws.com/topp100.json")
                     .ContinueWith((taskWithResponse) =>
                     {
                         var response = taskWithResponse.Result;
@@ -101,7 +101,7 @@ namespace MovieLibrary.Services
                         jsonString.Wait();
                         movies = JsonConvert.DeserializeObject<List<MovieModel>>(jsonString.Result);
                     });
-                task.Wait();
+                request.Wait();
 
                 var movie = movies.SingleOrDefault(movie => movie.Id.Equals(id));
 

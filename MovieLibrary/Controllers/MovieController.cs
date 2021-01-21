@@ -18,8 +18,8 @@ namespace MovieLibrary.Controllers
         }
 
         [HttpGet]
-        [Route("/GetTopp100MoviesAsync")]
-        public async Task<IEnumerable<MovieModel>> GetTopp100MoviesAsync(bool ascending = true)
+        [Route("/GetTop100MoviesAsync")]
+        public async Task<IEnumerable<MovieModel>> GetTop100MoviesAsync(bool ascending = true)
         {
             return await _movieClient.GetTop100MoviesAsync(ascending);
         }
